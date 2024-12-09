@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-service-api
+  labels:
+    name: test-service-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: test-service-api
+  template:
+    metadata:
+      name: test-service-api
+      labels:
+        name: test-service-api
+    spec:
+      containers:
+        - image: lets/test-service-api:latest
+          imagePullPolicy: IfNotPresent
+          name: test-service-api
+          ports:
+            - containerPort: 8591
+          envFrom:
+            - configMapRef:
+                name: test-service-api-configmap
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 10" ]

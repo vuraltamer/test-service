@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-service-api-service
+spec:
+  type: NodePort
+  selector:
+    name: test-service-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8591
+      nodePort: 30008
